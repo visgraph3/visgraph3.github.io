@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-model href="../grammar/rash.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<html xmlns="http://www.w3.org/1999/xhtml" prefix="fabio: http://purl.org/spar/fabio/     cito: http://purl.org/spar/cito/     pro: http://purl.org/spar/pro/     schema: http://schema.org/     prism: http://prismstandard.org/namespaces/basic/2.0/     frbr: http://purl.org/vocab/frbr/core#     dcterms: http://purl.org/dc/terms/">
+    <head>
+        <!-- Visualisation requirements (mandatory for optimal reading) -->
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        
+        <link rel="stylesheet" href="./css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="./css/rash.css"/>
+        
+        <script src="./js/jquery.min.js"><!--//--><![CDATA[ ]]><!--//--></script>
+        <script src="./js/bootstrap.min.js"><!--//--><![CDATA[ ]]><!--//--></script>
+        <script src="./js/rash.js"><!--//--><![CDATA[ ]]><!--//--></script>
+        <!-- /END Visualisation requirements (mandatory for optimal reading) -->
+        
+        <!-- Metadata -->
+        <title property="dcterms:title">VisGraph^3: a web tool for RDF visualization and creation</title>
+        
+        <!-- Author's data (one or more) -->
+        <meta about="#dt" typeof="schema:Person" name="dc.creator" property="schema:name" content="Dominik Tomaszuk"/>
+        <meta about="#dt" property="schema:email" content="d.tomaszuk@uwb.edu.pl"/>
+        <link about="#dt" property="schema:affiliation" href="http://uwb.edu.pl/"/>
+        
+        <meta about="#pt" typeof="schema:Person" name="dc.creator" property="schema:name" content="Przemysław Truchan"/>
+        <meta about="#pt" property="schema:email" content="truchan@codedev.pl"/>
+        <link about="#pt" property="schema:affiliation" href="http://uwb.edu.pl/"/>
+        
+        <!-- Affiliations -->
+        <meta about="http://uwb.edu.pl/" property="schema:name" typeof="schema:Organization" content="Institute of Informatics, University of Bialystok, Bialystok, Poland"/>
+        
+        <!-- Paper keywords (one or more) -->
+        <meta property="prism:keyword" content="RDF"/>
+        <meta property="prism:keyword" content="visualization"/>
+        <meta property="prism:keyword" content="Read-Write Web"/>
+        <!-- /END Metadata -->
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><!--//--><![CDATA[ ]]><!--//--></script></head>
+    <body>
+        <!-- Abstract -->
+        <section role="doc-abstract">
+            <h1>Abstract</h1>
+            <p>In order to make RDF data more accessible to users, we have developed the visual tool VisGraph^3. It allows you to read, create, and modify RDF graphs. 
+            In this demo, we present a web-based prototype that support Read-Write aspect of the WWW. In contrast to related work, RDF triples can be created and shared entirely 
+            with visual elements.</p>
+        </section>
+        <!-- Sections -->
+        <section id="sec_introduction">
+            <h1>Introduction</h1>
+            <p><abbr title="Resource Description Framework">RDF</abbr> <a href="#Cyganiak2014"> </a> is not only the backbone of the Semantic Web and Linked Data, but it is 
+            increasingly used in many different areas eg. social web, 
+            government, publications, life sciences, user-generated content, media. As a consequence, more and more people come into contact with knowledge representation and 
+            become an RDF provider as well as RDF consumer. The purpose of data visualization is to propose intuitive ways for information perception and manipulation, especially 
+            for those who are not an expert. RDF visualizations can help in this regard by assisting in the exploration and creation of RDF data.</p>
+            <p>In order to provide a more intuitive and user-oriented RDF visualization, we developed the VisGraph^3. In this demo, we present a web-based prototype for read 
+            and write RDF. The paper is constructed according to sections. In Section <a href="#sec_implementation"> </a>, we present implementation and overview of our tool. 
+            Section <a href="#sec_relatedwork"> </a> is devoted to brief related work. The paper ends with conclusions and future work.</p>
+        </section>
+        <section id="sec_implementation">
+            <h1>Implementation and Overview of VisGraph^3</h1>
+            <p>VisGraph^3 is implemented on top of several open source tools and libraries. To build a basic user interface we used Bootstrap v4.0.0-alpha.6<a href="#fn1"> </a> 
+            widgets. Our tool is designed with <abbr title="Responsive web design">RWD</abbr> principles so we can view it in various device and displays.
+            In VisGraph^3, interaction with the user provides JavaScript and jQuery<a href="#fn2"> </a>. The RDF graph visualization is based on 
+            <abbr title="Data-Driven Documents">D3</abbr><a href="#fn3"> </a>, which is a JavaScript library for making dynamic, interactive data visualizations in web browsers.
+            The back-end is implemented in <abbr title="PHP: Hypertext Preprocessor">PHP</abbr> and MySQL. The source code is available on 
+            <a href="https://github.com/visgraph3/demo">https://github.com/visgraph3/demo</a>. Our tool is released under the MIT license.</p> 
+            
+            <p>VisGraph^3 is a web-based application for read and write RDF. The user interface consists of two parts: 
+            <ol>
+				<li>the upload page</li>
+				<li>and the viewer page.</li>
+			</ol>
+			</p>
+			<p>
+			In the upload page users can specify an RDF file in two different ways: by entering a URL or by upload to the server. This part is presented in <a href="#fig1"> </a>.
+			Here we shows the last ten projects. VisGraph^3 can load RDF files in Notation3, Turtle, N-Triples and RDF/XML syntaxes.
+			</p>
+            <figure id="fig1">
+                <p><img src="images/screenshot1.png" alt="the upload page"/></p>
+                <figcaption>Upload page</figcaption>
+            </figure>
+            <p>The second page is the viewer page, which is the main part of our web application. This part is divided into two areas: the control area and the graph area.
+            In the control area users can add prefixes and IRIs that makes it easy to enter long IRIs. Here we can filter predicates, which are available in the loaded file.
+            An RDF graph is seen in the graph area. We visualize an RDF graph as a node and directed-arc diagram, in which each triple is represented as a node-arc-node edge
+            This part is presented in <a href="#fig2"> </a>. The indication on the node displays a popup window, where we can add a subject, a predicate or an object.
+            After editing user can download an RDF graph in Turtle or RDF/XML syntax. It is also possible to save and share an RDF graph in the server. All share projects
+            have its own URL.</p>
+            <figure id="fig2">
+                <p><img src="images/screenshot2.png" alt="the viewer page"/></p>
+                <figcaption>Viewer page</figcaption>
+            </figure>     
+            
+            <p>The prototype of our tool is available at <a href="http://visgraph3.org">http://visgraph3.org</a>. A video demonstration is available 
+            at <a href="http://visgraph3.org/demo/">http://visgraph3.org/demo/</a>.</p>
+        </section>
+        
+        <section id="sec_relatedwork">
+            <h1>Related Work</h1>
+            <p>In this Subsection, we discuss visualization tools, which can be divided into three groups: desktop applications, semi-web applications, and web applications.</p>
+            <p>The first group relates to native tools running on operationg system <a href="#Noy2001"> </a>, <a href="#Pietriga2002"> </a>, <a href="#Liebig2005"> </a>, 
+            <a href="#Singh2006"> </a>, and <a href="#Lohmann2016"> </a>. In <a href="#Noy2001"> </a>, authors present Protégé that is ontology editor providing support for 
+            knowledge acquisition. This application allows the interactive creation and visualization of classes in a hierarchical view. Isaviz <a href="#Pietriga2002"> </a> is
+            a visual environment for browsing and editing RDF models represented as directerd graphs. It supports various RDF serializations and based on the GraphViz 
+            library<a href="#fn4"> </a>. In <a href="#Liebig2005"> </a>, OntoTrack is presented. It is another an ontology authoring tool that provides an animated and zoomable 
+            view. OntoViz Tab <a href="#Singh2006"> </a> is another application based on the GraphViz library. It shows onlologies in Protégé as 2D graph with 
+            the capability for each class to present, apart from the name, its properties, and inheritance and role relations. Yet another Protégé plug-in is 
+            ProtégéVOWL <a href="#Lohmann2016"> </a>. It provides a comparatively intuitive and usable ontology visualization. ProtégéVOWL consists of the viewer for ontology 
+            presentation, a sidebar for element details, and a control panel for configuration.</p>
+
+            <p>The second group is a semi-web applications Haystack <a href="#Huynh2002"> </a>, <a href="#Bernerslee2006"> </a> and <a href="#fn5"> </a>, 
+            which require both the local environment and the web, e.g. are extensions to web browsers. In <a href="#Huynh2002"> </a>, authors show Haystack, which is 
+            a personalized information repository that supports RDF. Another application is Tabulator <a href="#Bernerslee2006"> </a>, which recognizes and follows RDF links to 
+            other RDF resources based on the user&amp;s exploration and analysis. Openlink Structured Data Sniffer<a href="#fn5"> </a> is the next tool that is an extension for 
+            the Chrome, Firefox and other browsers. It detects and presents RDF data embedded in web pages and serialized in JSON-LD, RDFa, Turtle and other serializations.</p>
+            
+            <p>The third group relates to web based applications <a href="#Ghislain2014"> </a>, <a href="#Bikakis2014"> </a>, <a href="#Skjaveland2015"> </a>,
+            <a href="#Lohmann2016"> </a> and <a href="#fn6"> </a>. In <a href="#Ghislain2014"> </a>, Linked Data Vizualization Wizard (LDVizWiz) is presented. It provides a 
+            semi-automatic way for the generation of visualization for RDF datasets. LDVizWiz can catalog data in one of the following classes: Temporal, Geography, Event, Agent, 
+            Organization, Knowledge and Statistics. Another web application is rdf:SynopsViz <a href="#Bikakis2014"> </a> that is a tool for hierarchical charting and visual 
+            exploration of Linked Open Data (LOD)<a href="#fn7"> </a>. It provides some statistics about datasets, e.g. number of triples, properties, classes etc. The next tool is 
+            Sgvizler <a href="#Skjaveland2015"> </a>. It is a JavaScript library which visualise of SPARQL result sets. Sgvizler users can specify the query, the type of 
+            visualization to generate, the dimensions of the chart etc. In <a href="#Lohmann2016"> </a>, authors show WebVOWL. This tool similar to ProtégéVOWL provides 
+            an ontology visualization. Yet another web tool is OpenLink RDF Editor<a href="#fn6"> </a> that enables editing of RDF documents in Turtle serialization.</p>
+        </section>
+        
+        <section id="sec_conclusions">
+            <h1>Future Work</h1>
+            <p>In this paper we have presented VisGraph^3, a web tool for RDF visualization and creation. The tool does not require prior knowledge of RDF syntaxes.
+            Some future extensions of our tool include support of new serializations, 
+            especially syntaxes that handling named graphs, and deal with the large amount of RDF data. We would like to add more options for filtering, e.g. selection of a node and 
+            its neighbors. The desired function is also authentication to the user profile, where the individual projects are stored. In can be done with 
+            <abbr title="SOcial LInked Data">Solid</abbr><a href="#fn8"> </a> is a set of conventions for building decentralized social applications.</p>
+        </section>
+        
+        <!-- References -->
+        <section role="doc-bibliography">
+            <h1>References</h1>
+            <ol rel="cito:cites">
+				<li id="Cyganiak2014" role="doc-biblioentry"><p>Cyganiak, Richard, David Wood, Markus Lanthaler: RDF 1.1 Concepts and Abstract Syntax (2014) <a href="https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/">https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/</a>.</p></li>
+				<li id="Noy2001" role="doc-biblioentry"><p>Noy, Natalya F., Michael Sintek, Stefan Decker, Monica Crubezy, Ray W. Fergerson, Mark A. Musen: Creating semantic web contents with protege-2000. IEEE intelligent systems 16.2 (2001): 60-71.</p></li>
+                <li id="Pietriga2002" role="doc-biblioentry"><p>Pietriga, Emmanuel: Isaviz: a visual environment for browsing and authoring rdf models. Eleventh International World Wide Web Conference Developers Day. 2002.</p></li>
+                <li id="Huynh2002" role="doc-biblioentry"><p>Huynh, David, David Karger, and Dennis Quan: Haystack: A platform for creating, organizing and visualizing information using RDF. Proceedings of the 3rd International Conference on Semantic Web-Volume 55. CEUR-WS.org, 2002.</p></li>
+                <li id="Liebig2005" role="doc-biblioentry"><p>Liebig, Thorsten, and Olaf Noppens: OntoTrack: A semantic approach for ontology authoring. Web Semantics: Science, Services and Agents on the World Wide Web 3.2 (2005): 116-131.</p></li>
+                <li id="Bernerslee2006" role="doc-biblioentry"><p>Berners-Lee, Tim and Yuhsin Chen, Connolly Lydia, Dhanaraj Dan, Hollenbach Ruth, Lerer James, Sheets Adam: Tabulator: Exploring and analyzing linked data on the semantic web. Proceedings of the 3rd international semantic web user interaction workshop. Vol. 2006. 2006.</p></li>
+                <li id="Singh2006" role="doc-biblioentry"><p>Singh, Gagandeep, T. Prabhakar, Jayanta Chatterjee, V. Patil, S. Ninomiya, and others: OntoViz: visualizing ontologies and thesauri using layout algorithms. AFITA: The fifth international conference of the Asian Federation for Information Technology in Agriculture, JN Tata Auditorium, Indian. 2006.</p></li>
+                <li id="Ghislain2014" role="doc-biblioentry"><p>Atemezing, Ghislain Auguste, Raphaël Troncy: Towards a linked-data based visualization wizard. Proceedings of the 5th International Conference on Consuming Linked Data-Volume 1264. CEUR-WS.org, 2014.</p></li>
+                <li id="Bikakis2014" role="doc-biblioentry"><p>Bikakis, Nikos, Melina Skourla, George Papastefanatos: rdf:SynopsViz–a framework for hierarchical linked data visual exploration and analysis. European Semantic Web Conference. Springer, Cham, 2014.</p></li>
+                <li id="Skjaveland2015" role="doc-biblioentry"><p>Skjæveland, Martin G.: Sgvizler: A Javascript wrapper for easy visualization of SPARQL result sets. Extended Semantic Web Conference. Springer, Berlin, Heidelberg, 2012.</p></li>
+                <li id="Lohmann2016" role="doc-biblioentry"><p>Lohmann, Steffen and Stefan Negru, Florian Haag, Thomas Ertl: Visualizing ontologies with VOWL. Semantic Web 7.4 (2016): 399-419.</p></li>
+            </ol>
+        </section>
+        
+        <!-- Footnotes -->
+        <section role="doc-endnotes">
+			<section id="fn1" role="doc-endnote">
+                <p><a href="http://getbootstrap.com/">http://getbootstrap.com/</a></p>
+            </section>
+			<section id="fn2" role="doc-endnote">
+                <p><a href="http://www.graphviz.org/">http://jquery.com/</a></p>
+            </section>
+            <section id="fn3" role="doc-endnote">
+                <p><a href="https://d3js.org/">https://d3js.org/</a></p>
+            </section>
+            <section id="fn4" role="doc-endnote">
+                <p><a href="http://www.graphviz.org/">http://www.graphviz.org/</a></p>
+            </section>
+            <section id="fn5" role="doc-endnote">
+                <p><a href="https://github.com/openlink/structured-data-sniffer">https://github.com/openlink/structured-data-sniffer</a></p>
+            </section>
+            <section id="fn6" role="doc-endnote">
+                <p><a href="https://github.com/openlink/rdf-editor">https://github.com/openlink/rdf-editor</a></p>
+            </section>
+            <section id="fn7" role="doc-endnote">
+                <p><a href="http://lod-cloud.net/">http://lod-cloud.net/</a></p>
+            </section>
+            <section id="fn8" role="doc-endnote">
+                <p><a href="https://github.com/solid/solid-spec">https://github.com/solid/solid-spec</a></p>
+            </section>
+        </section>
+    </body>
+</html>
